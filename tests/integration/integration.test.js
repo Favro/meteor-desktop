@@ -181,6 +181,8 @@ describe('desktop', () => {
         it('expose electron modules', async () => {
             const platformsPath = path.join(appDir, '.meteor', 'platforms');
             let platforms = fs.readFileSync(platformsPath);
+            if (process.env.METEOR_EXTRA_PLATFORMS)
+              platforms.push(...process.env.METEOR_EXTRA_PLATFORMS.split(';'));
             if (!platforms.includes('android')) {
                 platforms += '\nandroid\n';
                 fs.writeFileSync(platformsPath, platforms);
